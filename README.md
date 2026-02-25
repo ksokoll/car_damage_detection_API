@@ -60,7 +60,7 @@ Three endpoints:
 | GET | `/claims/{claim_id}` | Retrieve claim with audit trail |
 | PUT | `/claims/{claim_id}/override` | Override AI rejection |
 
-**Base URL:** `https://fsj2qravu3.execute-api.eu-central-1.amazonaws.com/dev`
+URL is offline. Below curl is only for visulazation.
 
 Full spec in [`docs/api_specification.md`](docs/api_specification.md).
 
