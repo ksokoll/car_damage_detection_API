@@ -32,7 +32,7 @@ Lambda (Container Image, 1024MB)
 DynamoDB (PAY_PER_REQUEST)
 ```
 
-The most important Architecture decision was to use Single Lambda over microservices: 1-3 req/min doesn't justify distributed architecture. Container image over ZIP. ONNX Runtime + OpenCV alone exceed the 250MB Lambda ZIP limit. Please find the full reasoning, as well as all other architecture desicn decisions in the ADR [`docs/architecture_decision_record.md`](docs/architecture_decision_record.md).
+The most important Architecture decision was to use Single Lambda over microservices: 1-3 req/min doesn't justify distributed architecture. Container image over ZIP. ONNX Runtime + OpenCV alone exceed the 250MB Lambda ZIP limit. Please find the full reasoning, as well as all other architecture desicn decisions in the ADR [`docs/architecture_decision_record.md`](docs/System_Design/architecture_decision_record.md).
 
 ---
 
@@ -62,7 +62,7 @@ Three endpoints:
 
 URL is offline. Below curl is only for visulazation.
 
-Full spec in [`docs/api_specification.md`](docs/api_specification.md).
+Full spec in [`docs/api_specification.md`](docs/System_Design/api_specification.md).
 
 ```bash
 curl -X POST https://fsj2qravu3.execute-api.eu-central-1.amazonaws.com/dev/claims/validate \
@@ -166,7 +166,7 @@ YOLOv8n-cls trained on 920 damage + 920 whole vehicle images, exported to ONNX. 
 
 | Document | Description |
 |----------|-------------|
-| [`architecture_decision_record.md`](docs/architecture_decision_record.md) | Why things are built the way they are |
-| [`bounded_contexts.md`](docs/bounded_contexts.md) | Module responsibilities and interfaces |
-| [`api_specification.md`](docs/api_specification.md) | Full endpoint documentation |
-| [`project_log.md`](docs/project_log.md) | What went wrong and what to watch out for |
+| [`architecture_decision_record.md`](docs/System_Design/architecture_decision_record.md) | Why things are built the way they are |
+| [`bounded_contexts.md`](docs/System_Design/bounded_contexts.md) | Module responsibilities and interfaces |
+| [`api_specification.md`](docs/System_Design/api_specification.md) | Full endpoint documentation |
+| [`project_log.md`](docs/System_Design/project_log.md) | What went wrong and what to watch out for |
