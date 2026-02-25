@@ -43,3 +43,8 @@ Thumbs.db
 
 # Large model files
 lambda/models/*.onnx
+
+# Build artifacts
+terraform/terraform.exe
+lambda/lambda.zip
+*.exe
