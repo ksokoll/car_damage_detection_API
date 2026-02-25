@@ -166,7 +166,7 @@ YOLOv8n-cls trained on 920 damage + 920 whole vehicle images, exported to ONNX. 
 
 | Document | Description |
 |----------|-------------|
-| [`architecture_decision_record.md`](docs/System_Design/architecture_decision_record.md) | Why things are built the way they are |
-| [`bounded_contexts.md`](docs/System_Design/bounded_contexts.md) | Module responsibilities and interfaces |
-| [`api_specification.md`](docs/System_Design/api_specification.md) | Full endpoint documentation |
+| [`architecture_decision_record.md`](docs/System_Design/ADR.md) | Why things are built the way they are |
+| [`bounded_contexts.md`](docs/System_Design/Bounded_Contexts.md) | Module responsibilities and interfaces |
+| [`api_specification.md`](docs/System_Design/API_SPEC.md) | Full endpoint documentation |
 | [`project_log.md`](docs/System_Design/project_log.md) | What went wrong and what to watch out for |
