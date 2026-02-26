@@ -16,7 +16,7 @@ One word about the scope of the project: This portfolio project focussed on prod
 
 ## Business Case Overview
 
-The "insurisense GmbH" reached out to me to have a look on their car-damage claim-entry process. This process includes the entry of all relevant insurance claim information by the customer via a web frontend (desktop / mobile). After some analysis and subject-matter expert interviews, we figured out that every 4th case (25%) of uploaded images of the car damages is insufficient, and needs further clarification by the clerks.
+The fictional customer "insurisense GmbH" reached out to me to have a look on their car-damage claim-entry process. This process includes the entry of all relevant insurance claim information by the customer via a web frontend (desktop / mobile). After some analysis and subject-matter expert interviews, we figured out that every 4th case (25%) of uploaded images of the car damages is insufficient, and needs further clarification by the clerks.
 
 ### Business Case Calculation: Quantitative Factors
 
