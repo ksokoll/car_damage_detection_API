@@ -14,6 +14,40 @@ One word about the scope of the project: This portfolio project focussed on prod
 
 ---
 
+## Business Case Overview
+
+The "insurisense GmbH" reached out to me to have a look on their car-damage claim-entry process. This process includes the entry of all relevant insurance claim information by the customer via a web frontend (desktop / mobile). After some analysis and subject-matter expert interviews, we figured out that every 4th case (25%) of uploaded images of the car damages is insufficient, and needs further clarification by the clerks.
+
+### Business Case Calculation: Quantitative Factors
+
+This might sound minor, but the insurisence GmbH receives ~1000 claims per day (with variance!). Each manuall processing of a claim leads to a long process chain:
+1. View images and determine that the quality is insufficient
+2. Open internal ticket
+3. Contact Customer via mail, telephone or letter
+4. Document result
+5. Check for new images
+6. Close Ticket
+7. In case of no response: ask & escalate
+8. Close Claim
+
+Observing dozens of such cases, I measured classicaly with a stopwatch that each case takes an average of 20 minutes, spread over multiple days.
+Automating the process of image quality detection serves the customer with a instant feedback, leading to approximately 25% less "insufficient quality" claims
+This saves about 20,8h of work time per day, the equivalent of 2,5 full time employees.
+
+The insurance reported 60€ / hour of hourly cost on average for insurance-claim clerks, accumulating to **24.000€ / month of savings.**
+
+The true quality of this automation therefore is not only the automatic picture quality check, but the elimination of the whole follow-up process in case of bad images.
+
+### Business Case Calculation: Qualitative Factors
+
+**Customer experience** is a major lever for insurances to retain customers (and also aquire new ones). Getting an almost instant, helpful feedback as customer when uploading images that do not fit the quality standard is a way better experience than waiting several days and then getting a mail that the claim cannot be processed.
+
+The possibility to manually override the models decision gives autonomy to the user.
+
+This might also lead to **reputation gains**, as these kinds of checks show a digital-first mindset. This self service is a differentiating feature for an incurance especially to younger customers.
+
+---
+
 ## Architecture
 
 ```
