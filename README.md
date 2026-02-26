@@ -30,13 +30,35 @@ This might sound minor, but the insurisence GmbH receives ~1000 claims per day (
 7. In case of no response: ask & escalate
 8. Close Claim
 
-Observing dozens of such cases, I measured classicaly with a stopwatch that each case takes an average of 20 minutes, spread over multiple days.
-Automating the process of image quality detection serves the customer with a instant feedback, leading to approximately 25% less "insufficient quality" claims
-This saves about 20,8h of work time per day, the equivalent of 2,5 full time employees.
+Observing dozens of such cases, I measured classicaly with a stopwatch: The Median was 20 minutes, but range was 8-45 minutes depending on channel (email vs. phone vs. letter). I use the median for calculation, not the mean, because outliers (letter correspondence over weeks) would inflate the number unrealistically.
+Automating the process of image quality detection serves the customer with a instant feedback, with a prognosed reduction of these claims by 25%. We assume therefore, that every 4th customer takes the initiative and resolves the picture-quality image in self service. (This needs to be measured and validated later, as it can be higher or lower!) We assume 25% as a starting point, but this is the most uncertain variable in the entire calculation. If only 10% self-resolve, savings drop to ~100.000€/year  still a 5x ROI. If 40% self-resolve, we're looking at 400.000€. The system logs every interaction, so we'll know the real number within 4 weeks of go-live.
 
-The insurance reported 60€ / hour of hourly cost on average for insurance-claim clerks, accumulating to **24.000€ / month of savings.**
-
+Right now we expect savings about 20,8h of work time per day, the equivalent of 2,5 full time employees. 
 The true quality of this automation therefore is not only the automatic picture quality check, but the elimination of the whole follow-up process in case of bad images.
+
+The insurance reported 60€ / hour of hourly cost on average for insurance-claim clerks, accumulating to **24.000€ / month of savings** or over a quarter of million € per year.
+
+On the contrary we have the initial and running cost for the automation:
+
+For the initial cost I calculate the development cost and all adjacent costs like discovery workshops, analysis, handover, etc:
+
+1. Discovery & Requirements: 3-5 days
+2. Development & Integration: 5-10 days
+3. Testing & UAT: 3-5 days
+4. Deployment & handover: 2-3 days
+5. Overall: 15-25 days
+
+At 1000€ / day blended rate we have 15k-25k € of initial project cost.
+
+For the running cost we can calculate 200€  / Year for the AWS infrastructure (neglegtible) as well as 6-8 days/year for maintanance (~8000€ / year) accumulating to ~8k € / year.
+
+To summarize the quantitative Factors: A quarter million € stands contrary to 15-25k € of initial development cost and 8k€ of yearly maintanance, leading to 15-20x ROI with a cost-break even after approximately 6 weeks.
+One little trick is to cut the adoption quote of the customers in half (from 25% to 12,5%) and take a look at the numbers:
+
+Maintanance stays the same: 8k
+Savings are halved: ~125k.
+
+Still a good business case. This should be enough for green light from the decision makers.
 
 ### Business Case Calculation: Qualitative Factors
 
@@ -45,6 +67,18 @@ The true quality of this automation therefore is not only the automatic picture 
 The possibility to manually override the models decision gives autonomy to the user.
 
 This might also lead to **reputation gains**, as these kinds of checks show a digital-first mindset. This self service is a differentiating feature for an incurance especially to younger customers.
+
+### Business Case - Risks and Counter-Arguments:
+
+The business case assumes the model reliably distinguishes good from bad images. If that assumption breaks, say a false-rejection rate of 15%, customers get told their perfectly fine photo is insufficient. They get frustrated, call the hotline, and the clerks have more work than before, not less. The override mechanism mitigates this partially because users can push back immediately, and we monitor false-rejection rates from day one. If accuracy drops below an acceptable threshold, we adjust the confidence threshold or retrain with production data. But it's a real risk that needs to be tracked.
+
+The 25% self-service assumption implies customers actually re-take photos when prompted. Older demographics may ignore the feedback and call anyway ('Hotline Backfire') If adoption is low, the automation still prevents bad images from entering the pipeline  but the savings shift from "eliminated follow-up" to "faster follow-up", because the clerk already knows the image is bad without having to assess it manually. The ROI shrinks but doesn't disappear.
+
+Automated decision-making in insurance claims can trigger regulatory scrutiny depending on how far the automation goes. This system only pre-screens image quality, not the claim itself  the actual damage assessment and payout decision stays with humans. That distinction matters legally, but should be validated with the compliance team before go-live. BaFin may or may not care, but finding out after launch is not a position you want to be in.
+
+Vendor Lock-In: If insurisense has no internal ML competency, they depend on the consulting partner for model retraining and maintenance indefinitely. Thats either a risk or a feature but it should be a conscious decision, not something that becomes obvious six months after handover. Knowledge transfer and documentation are part of the delivery for exactly this reason.
+
+Car damage photos can contain license plates, faces, and location data, all personal data under GDPR. The system stores images temporarily for processing, which requires a data processing agreement, a GDPR impact assessment, and clear retention policies. Not a blocker, but a workstream that needs to happen in parallel to development, not after. If compliance blocks the project late, the financial upside is irrelevant. Therefore legal validation must happen before development starts.
 
 ---
 
@@ -58,10 +92,10 @@ API Gateway (HTTP v2)
   │  $default route
   ▼
 Lambda (Container Image, 1024MB)
-  ├── core/validator.py    — quality checks (OpenCV, ~5ms)
-  ├── core/inference.py    — ONNX damage detection (~40ms)
-  ├── core/storage.py      — DynamoDB persistence (~10ms)
-  └── core/handler.py      — orchestration + routing
+  ├── core/validator.py     quality checks (OpenCV, ~5ms)
+  ├── core/inference.py     ONNX damage detection (~40ms)
+  ├── core/storage.py       DynamoDB persistence (~10ms)
+  └── core/handler.py       orchestration + routing
   ▼
 DynamoDB (PAY_PER_REQUEST)
 ```
@@ -176,7 +210,7 @@ python scripts/manual_test.py
 First deployment requires two `terraform apply` runs. ECR has to exist before the image can be pushed, and the image has to exist before Lambda can be created.
 
 ```powershell
-cd terraform && terraform apply   # creates ECR, Lambda will fail — expected
+cd terraform && terraform apply   # creates ECR, Lambda will fail  expected
 cd .. && .\scripts\build.ps1      # build + push image
 cd terraform && terraform apply   # creates Lambda
 ```
